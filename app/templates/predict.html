@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Disease Outbreak Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Disease Outbreak Prediction</h1>
+    <form method="post">
+        <label>Temperature (°C): <input type="number" name="temperature" required></label>
+        <label>Humidity (%): <input type="number" name="humidity" required></label>
+        <label>Population Density (per km²): <input type="number" name="population_density" required></label>
+        <button type="submit">Predict</button>
+    </form>
+
+    {% if prediction is not none %}
+    <h2>Predicted Flu Cases: {{ prediction | round(2) }}</h2>
+    {% endif %}
+
+    <canvas id="predictionsChart"></canvas>
+
+    <script>
+        const predictions = {{ predictions | tojson }};
+        const labels = predictions.map((pred, i) => `Prediction ${i + 1}`);
+        const dataPoints = predictions.map(pred => pred.flu_cases);
+
+        new Chart(document.getElementById('predictionsChart').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Predicted Flu Cases',
+                    data: dataPoints,
+                    backgroundColor: 'rgba(0, 119, 182, 0.2)',
+                    borderColor: '#0077b6',
+                    borderWidth: 2,
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { beginAtZero: true },
+                    x: { title: { display: true, text: 'Prediction Instances' }}
+                }
+            }
+        });
+    </script>
+</body>
+</html>
