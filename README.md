@@ -102,4 +102,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Contact
 
-For more information or inquiries, please contact [Intelligentsia Club](mailto:intelligentsia@kluniversity.in).
+For more information or inquiries, please contact [intelligentsia.techclub@gmail.com
+](mailto:intelligentsia.techclub@gmail.com
+).
